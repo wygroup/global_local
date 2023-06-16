@@ -22,7 +22,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.wide_and_deep">
+  <component name="RunManager" selected="Python.graph">
     <configuration name="graph" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="global_local" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -88,8 +88,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.wide_and_deep" />
         <item itemvalue="Python.graph" />
+        <item itemvalue="Python.wide_and_deep" />
         <item itemvalue="Python.pixel" />
       </list>
     </recent_temporary>

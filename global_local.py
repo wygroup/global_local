@@ -141,23 +141,29 @@ if __name__ == '__main__':
 	origin_len = int(len(aug_y) / 20)
 	index = np.array(list(range(origin_len)))
 
-	# Randomly generate the index of training set and test set
+	# Randomly generate the index of train, val and test set
 	train_index, test_index = train_test_split(index, test_size=0.2, random_state=42, shuffle=True)
+	val_index, test_index = train_test_split(test_index, test_size=0.5, random_state=42, shuffle=True)
 
-	# Generate the index of training set and test set after DA
+	# Generate the index of train, val and test set after DA
 	rand_index = np.random.choice(list(range(20)), size=REPEAT, replace=False)
-	aug_train_index, aug_test_index = [], []
+	aug_train_index, aug_val_index, aug_test_index = [], [], []
 	for _i in train_index:
 		for _j in rand_index:
 			aug_train_index.append(_i * 20 + _j)
+	for _i in val_index:
+		for _j in rand_index:
+			aug_val_index.append(_i * 20 + _j)
 	for _i in test_index:
 		for _j in rand_index:
 			aug_test_index.append(_i * 20 + _j)
 
 	# Generate training set and test set after DA
 	X_train_1, X_train_2, aug_y_train = X_1[aug_train_index], X_2[aug_train_index], aug_y[aug_train_index]
+	X_val_1, X_val_2, aug_y_val = X_1[aug_val_index], X_2[aug_val_index], aug_y[aug_val_index]
 	X_test_1, X_test_2, aug_y_test = X_1[aug_test_index], X_2[aug_test_index], aug_y[aug_test_index]
 	print(f"train: {X_train_1.shape}, {X_train_2.shape}, {aug_y_train.shape}.")
+	print(f"val: {X_val_1.shape}, {X_val_2.shape}, {aug_y_val.shape}.")
 	print(f"test: {X_test_1.shape}, {X_test_2.shape}, {aug_y_test.shape}.")
 
 	# Grid visualization
@@ -205,7 +211,7 @@ if __name__ == '__main__':
 				batch_size=BATCH_SIZE,
 				epochs=200, verbose=2, shuffle=True,
 				# validation_split=0.2,
-				validation_data=([X_test_1, X_test_2], aug_y_test),
+				validation_data=([X_val_1, X_val_2], aug_y_val),
 				callbacks=[
 				tf.keras.callbacks.TensorBoard(log_dir=rundir, histogram_freq=5),
 				# tf.keras.callbacks.EarlyStopping(monitor="val_loss", patience=10, verbose=2),
